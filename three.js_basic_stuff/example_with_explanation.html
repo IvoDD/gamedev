@@ -1,0 +1,48 @@
+﻿<html>
+	<head>
+		<style>
+			body { margin: 0; }
+			canvas { width: 100%; height: 100% }
+		</style>
+	</head>
+	<body>
+		<script src="three.min.js"></script>
+		<script>
+
+			var renderer = new THREE.WebGLRenderer();
+			renderer.setSize( window.innerWidth, window.innerHeight );
+			document.body.appendChild( renderer.domElement );
+			//на тези 3 реда създаваме canvas на който да рисуваме и renderer, чрез който да render-ваме (render значи изрисуване на екрана).
+
+			var scene = new THREE.Scene(); //тук създаваме сцена
+			
+			var camera = new THREE.PerspectiveCamera( 30, window.innerWidth/window.innerHeight, 0.1, 1000 ); //създаваме камера
+			camera.position.set(3,3,8); //разполагаме камерата на координати (3, 3, 8)
+			camera.lookAt(new THREE.Vector3(0,0,0)); //казваме на камерата да гледа към (0, 0, 0)
+
+			var geometry = new THREE.BoxGeometry( 2, 2, 2 );
+			var material = new THREE.MeshPhongMaterial();
+			var cube = new THREE.Mesh( geometry, material );
+			scene.add( cube );
+			//създаване на кубче с размери 2x2x2 и Phong материал
+
+			var light = new THREE.PointLight( );
+			light.position.set(2,2,3);
+			scene.add( light );
+			//добавяне на светлина на позиция (2, 2, 3)
+
+			var animate = function () { // декларираме функция animate
+				requestAnimationFrame( animate ); // казваме на браузъра да ни даде Animation Frame (демек да ни каже кога е готов да нарисува нов кадър най-често когато е готов със стария кадър) и като е готов да извика функцията animate (забележете че се получава рекурсия)
+				renderer.render(scene, camera); // след като ни е даден кадъра можем да render-нем сцената от гледната точка на камерата
+			};
+            animate(); // викаме animate начално
+
+            function update(){
+                //scene.rotation.x += 0.01;
+				//scene.rotation.y += 0.01;
+            }
+            setInterval(update, 10);
+			// функция update ако искате
+		</script>
+	</body>
+</html>
